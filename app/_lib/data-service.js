@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { eachDayOfInterval } from "date-fns";
 import { supabase } from "./supabase";
 
-/////////////
 // GET
 
 export async function getCabin(id) {
@@ -11,9 +10,6 @@ export async function getCabin(id) {
     .select("*")
     .eq("id", id)
     .single();
-
-  // For testing
-  // await new Promise((res) => setTimeout(res, 2000));
 
   if (error) {
     console.error(error);
@@ -43,9 +39,6 @@ export const getCabins = async function () {
     .select("id, name, maxCapacity, regularPrice, discount, image")
     .order("name");
 
-  // For testing
-  // await new Promise((res) => setTimeout(res, 2000));
-
   if (error) {
     console.error(error);
     throw new Error("Cabins could not be loaded");
@@ -62,7 +55,6 @@ export async function getGuest(email) {
     .eq("email", email)
     .single();
 
-  // No error here! We handle the possibility of no guest in the sign in callback
   return data;
 }
 
@@ -84,7 +76,6 @@ export async function getBooking(id) {
 export async function getBookings(guestId) {
   const { data, error, count } = await supabase
     .from("bookings")
-    // We actually also need data on the cabins as well. But let's ONLY take the data that we actually need, in order to reduce downloaded data.
     .select(
       "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)"
     )
@@ -132,8 +123,6 @@ export async function getBookedDatesByCabinId(cabinId) {
 export async function getSettings() {
   const { data, error } = await supabase.from("settings").select("*").single();
 
-  // await new Promise((res) => setTimeout(res, 5000));
-
   if (error) {
     console.error(error);
     throw new Error("Settings could not be loaded");
@@ -154,7 +143,6 @@ export async function getCountries() {
   }
 }
 
-/////////////
 // CREATE
 
 export async function createGuest(newGuest) {
@@ -172,7 +160,6 @@ export async function createBooking(newBooking) {
   const { data, error } = await supabase
     .from("bookings")
     .insert([newBooking])
-    // So that the newly created object gets returned!
     .select()
     .single();
 
@@ -184,7 +171,6 @@ export async function createBooking(newBooking) {
   return data;
 }
 
-/////////////
 // UPDATE
 
 // The updatedFields is an object which should ONLY contain the updated data
@@ -218,7 +204,6 @@ export async function updateBooking(id, updatedFields) {
   return data;
 }
 
-/////////////
 // DELETE
 
 export async function deleteBooking(id) {
