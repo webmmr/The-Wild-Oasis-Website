@@ -9,7 +9,6 @@ async function Reservation({ cabin }) {
     getSettings(),
     getBookedDatesByCabinId(cabin.id),
   ]);
-
   const session = await auth();
 
   return (
@@ -20,7 +19,7 @@ async function Reservation({ cabin }) {
         cabin={cabin}
       />
       {session?.user ? (
-        <ReservationForm cabin={cabin} user={session?.user} />
+        <ReservationForm cabin={cabin} user={session.user} />
       ) : (
         <LoginMessage />
       )}
