@@ -34,7 +34,7 @@ function DateSelector({ settings, cabin, bookedDates }) {
   return (
     <div className="flex flex-col justify-between">
       <DayPicker
-        className="pt-12 place-self-center"
+        className="p-8 md:pt-12 place-self-center"
         mode="range"
         onSelect={setRange}
         selected={displayRange}
@@ -44,7 +44,8 @@ function DateSelector({ settings, cabin, bookedDates }) {
         fromDate={new Date()}
         toYear={new Date().getFullYear() + 1}
         captionLayout="dropdown"
-        numberOfMonths={2}
+        numberOfMonths={1}
+        pagedNavigation
         disabled={(curDate) =>
           isPast(curDate) ||
           bookedDates.some((date) => isSameDay(date, curDate))
